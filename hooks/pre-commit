@@ -1,0 +1,24 @@
+#!/bin/sh
+
+DOTGIT=$(pwd)/.git
+CONFIG_FILE=$DOTGIT/project.conf
+SCRIPTS=$DOTGIT/hooks/pre-commit-scripts
+
+if [ -f $CONFIG_FILE ] ; then
+  . $CONFIG_FILE
+else
+  echo "CONFIG FILE NOT FOUND : $CONFIG_FILE"
+fi
+
+# check javascript code
+JS_SCRIPT=$SCRIPTS/js.sh
+if [ -f $JS_SCRIPT ] ; then
+  if [ "$JS_CHECK" != "" ] ; then
+    echo "Checking Javascript code"
+    . $JS_SCRIPT
+  else
+    echo "JS check disabled"
+  fi
+else
+  echo "JS SCRIPT FILE NOT FOUND : $JS_SCRIPT"
+fi
